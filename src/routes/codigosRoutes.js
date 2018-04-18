@@ -10,7 +10,7 @@ options = {};
 
 module.exports = function(app){
 	app.get('/codigo',(req,res) =>{
-        codes = randomize(pattern,length);
+        
         //console.log("code: "+codes[0]);
         var userData = {
             codeGene: "1rwPq",
@@ -24,11 +24,15 @@ module.exports = function(app){
         codes = randomize(pattern,length);
         //console.log("code: "+codes[0]);
         var userData = {
-            codeGene: "1rwPq",
-            id_usuario: 3131
+            codeGene: codes,
+            id_usuario: req.body.id_usu
           };
         User.InsertCode(userData,(err,data) =>{
-			res.json(data);
+            console.log(data.length)
+            if(data.length>0 )
+                res.json(data);
+            else
+                res.json({"fail":false});
 		});
     });
     
