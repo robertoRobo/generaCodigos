@@ -9,18 +9,27 @@ options = {};
 
 
 module.exports = function(app){
-	app.post('/codigo',(req,res) =>{
+	app.get('/codigo',(req,res) =>{
         codes = randomize(pattern,length);
         //console.log("code: "+codes[0]);
         var userData = {
-            codeGene: "rYqiDg"
+            codeGene: "1rwPq",
+            id_usuario: 3131
           };
         User.getCode(userData,(err,data) =>{
 			res.json(data);
 		});
-		//res.json({
-        //    codigo : codes
-        //});
-	
-	});
+    });
+    app.post('/codigo',(req,res) =>{
+        codes = randomize(pattern,length);
+        //console.log("code: "+codes[0]);
+        var userData = {
+            codeGene: "1rwPq",
+            id_usuario: 3131
+          };
+        User.InsertCode(userData,(err,data) =>{
+			res.json(data);
+		});
+    });
+    
 }
