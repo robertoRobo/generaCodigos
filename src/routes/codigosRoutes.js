@@ -24,11 +24,11 @@ module.exports = function(app){
         codes = randomize(pattern,length);
         //console.log("code: "+codes[0]);
         var userData = {
-            codeGene: codes,
+            codeGene: "1rwPq",//codes,
             id_usuario: req.body.id_usu
           };
         User.InsertCode(userData,(err,data) =>{
-            console.log(data.length)
+            //console.log(data.length)
             if(data.length>0 )
                 res.json(data);
             else

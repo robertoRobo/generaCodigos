@@ -29,6 +29,12 @@ userModel.InsertCode= (userData,callback) =>{
         connection.query(`Select codigoQR,id_usuario from code1`,
 		(err,rows)=>{
 			if (rows) {
+				for(i = 0; i<rows.length; i++){
+					if(userData.codeGene.localeCompare(rows[i].codigoQR)==0){
+						console.log("existe: "+userData.codeGene)
+					}
+					
+				}
 				callback(null,rows);
 			}else{
 				callback(null, {
