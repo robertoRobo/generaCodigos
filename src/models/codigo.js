@@ -29,22 +29,24 @@ userModel.getCode= (userData,callback) =>{
     }
 userModel.InsertCode = (userData,callback) =>{
     if (connection) {
-        console.log("insert"+`${userData.id_usuario} ${userData.codeGene}`)
+        //console.log("insert"+`${userData.id_usuario} ${userData.codeGene}`)
 		var find = false;
         connection.query(`Select codigoQR,id_usuario from code1`,
 		(err,rows)=>{
 			if (rows) {
 				for(i = 0; i<rows.length; i++){
 					if(userData.codeGene.localeCompare(rows[i].codigoQR)==0){
-						console.log("existe: "+userData.codeGene)
+						//console.log("existe: "+userData.codeGene)
 						find = true;
 					}
 				}
 				if(find){
 					codes = nuevoCodigo(find,rows);
+					userData.codeGene = codes;
 				}
-				console.log("nuevo codigo a insertar: "+codes)
-				callback(null,rows);
+				console.log("nuevo codigo a insertar: "+userData.codeGene+ " orden: "+)
+				nuevoElemento(userData,callback);
+				///callback(null,rows);
 			}else{
 				callback(null, {
                   "exists": false,
@@ -58,6 +60,11 @@ userModel.InsertCode = (userData,callback) =>{
 			});
 	}
 }
+
+function nuevoElemento(userData,callback){
+	callback(null,{"prueba":true});
+}
+
 function nuevoCodigo(find,rows){
 	codes = ""
 	while(find){

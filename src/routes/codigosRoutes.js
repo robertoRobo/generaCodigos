@@ -24,8 +24,9 @@ module.exports = function(app){
         codes = randomize(pattern,length);
         //console.log("code: "+codes[0]);
         var userData = {
-            codeGene: "1rwPq",//codes,
-            id_usuario: req.body.id_usu
+            codeGene: codes,
+            id_usuario: req.body.id_usu,
+            numOrden: req.body.orden
           };
         User.InsertCode(userData,(err,data) =>{
             //console.log(data.length)
