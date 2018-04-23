@@ -25,17 +25,23 @@ userModel.getCode= (userData,callback) =>{
 userModel.InsertCode= (userData,callback) =>{
     if (connection) {
         console.log("insert"+`${userData.id_usuario} ${userData.codeGene}`)
-    
+		var find = false;
         connection.query(`Select codigoQR,id_usuario from code1`,
 		(err,rows)=>{
 			if (rows) {
 				for(i = 0; i<rows.length; i++){
 					if(userData.codeGene.localeCompare(rows[i].codigoQR)==0){
 						console.log("existe: "+userData.codeGene)
+						find = true;
 					}
-					
 				}
-				callback(null,rows);
+				if(find){
+					callback(null,{"find": find});
+				}else{
+					//aqui debemos insertar el nuevo código para la orden X y usuario Y
+					callback(null,rows);
+				}
+				
 			}else{
 				callback(null, {
                   "exists": false,

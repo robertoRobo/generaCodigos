@@ -29,10 +29,9 @@ module.exports = function(app){
           };
         User.InsertCode(userData,(err,data) =>{
             //console.log(data.length)
-            if(data.length>0 )
-                res.json(data);
-            else
-                res.json({"fail":false});
+            
+            res.json(data);
+         
 		});
     });
     
