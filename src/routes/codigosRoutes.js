@@ -9,18 +9,18 @@ options = {};
 
 
 module.exports = function(app){
-	app.get('/codigo',(req,res) =>{
+	app.post('/codigo',(req,res) =>{
         
         //console.log("code: "+codes[0]);
         var userData = {
             codeGene: "1rwPq",
-            id_usuario: 3131
+            id_usuario: req.body.id_usu
           };
         User.getCode(userData,(err,data) =>{
 			res.json(data);
 		});
     });
-    app.post('/codigo',(req,res) =>{
+    app.put('/codigo',(req,res) =>{
         codes = randomize(pattern,length);
         //console.log("code: "+codes[0]);
         var userData = {
