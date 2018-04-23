@@ -25,7 +25,11 @@ module.exports = function(app){
         var userData = {
             codeGene: codes,
             id_usuario: req.body.id_usu,
-            numOrden: req.body.orden
+            id_sucursal: req.body.sucursal,
+            descripcion: req.body.desc,
+            total: req.body.tot,
+
+            //numOrden: req.body.orden
           };
         User.InsertCode(userData,(err,data) =>{
             //console.log(data.length)

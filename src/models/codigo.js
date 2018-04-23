@@ -21,21 +21,21 @@ userModel.getCode= (userData,callback) =>{
 		        });
 			}
 		});
-		}else{
-			callback(null, {
-		          "msg": "bad things"
-		        });
-		}
-    }
+	}else{
+		callback(null, {
+				"msg": "bad things"
+			});
+	}
+}
 userModel.InsertCode = (userData,callback) =>{
     if (connection) {
         //console.log("insert"+`${userData.id_usuario} ${userData.codeGene}`)
 		var find = false;
-        connection.query(`Select codigoQR,id_usuario from code1`,
+        connection.query(`Select codigo from orden`,
 		(err,rows)=>{
 			if (rows) {
 				for(i = 0; i<rows.length; i++){
-					if(userData.codeGene.localeCompare(rows[i].codigoQR)==0){
+					if(userData.codeGene.localeCompare(rows[i].codigo)==0){
 						//console.log("existe: "+userData.codeGene)
 						find = true;
 					}
@@ -46,7 +46,7 @@ userModel.InsertCode = (userData,callback) =>{
 				}
 				console.log("nuevo codigo a insertar: "+userData.codeGene+ " orden: ")
 				nuevoElemento(userData,callback);
-				///callback(null,rows);
+				//callback(null,rows);
 			}else{
 				callback(null, {
                   "exists": false,
@@ -62,7 +62,26 @@ userModel.InsertCode = (userData,callback) =>{
 }
 
 function nuevoElemento(userData,callback){
-	callback(null,{"prueba":true});
+	//callback(null,{"prueba":true});
+	if (connection) {
+		connection.query(`
+		insert into orden(id_usuario,id_sucursal,descripcion,total,codigo,fecha,realizada
+		) values(${userData.id_usuario},${userData.id_sucursal},${userData.descripcion},${userData.total},${userData.codeGene},NOW(),0)`,
+		(err,rows)=>{
+			if (rows.length>0) {
+				callback(null,rows);
+			}else{
+				callback(null, {
+                  "exists": false,
+                  codigo: userData.codeGene
+		        });
+			}
+		});
+	}else{
+		callback(null, {
+				"msg": "bad things"
+			});
+	}
 }
 
 function nuevoCodigo(find,rows){
