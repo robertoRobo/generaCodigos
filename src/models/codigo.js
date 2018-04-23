@@ -45,7 +45,7 @@ userModel.InsertCode = (userData,callback) =>{
 					userData.codeGene = codes;
 				}
 				console.log("nuevo codigo a insertar: "+userData.codeGene+ " orden: ")
-				nuevoElemento(userData,callback);
+				nuevoElemento(userData,callback,connection);
 				//callback(null,rows);
 			}else{
 				callback(null, {
@@ -61,14 +61,14 @@ userModel.InsertCode = (userData,callback) =>{
 	}
 }
 
-function nuevoElemento(userData,callback){
+function nuevoElemento(userData,callback,connection){
 	//callback(null,{"prueba":true});
-	if (connection) {
-		connection.query(`
-		insert into orden(id_usuario,id_sucursal,descripcion,total,codigo,fecha,realizada
-		) values(${userData.id_usuario},${userData.id_sucursal},${userData.descripcion},${userData.total},${userData.codeGene},NOW(),0)`,
-		(err,rows)=>{
-			if (rows.length>0) {
+	
+	connection.query(`insert into orden(id_usuario,id_sucursal,descripcion,total,codigo,fecha,realizada) values(${userData.id_usuario},${userData.id_sucursal}
+		,'${userData.descripcion}',${userData.total},'${userData.codeGene}',NOW(),0)`,
+	//connection.query(`Select codigo from orden`,	
+	(err,rows)=>{
+			if (rows) {
 				callback(null,rows);
 			}else{
 				callback(null, {
@@ -77,12 +77,10 @@ function nuevoElemento(userData,callback){
 		        });
 			}
 		});
-	}else{
-		callback(null, {
-				"msg": "bad things"
-			});
-	}
+	//callback(null,userData);
 }
+	
+
 
 function nuevoCodigo(find,rows){
 	codes = ""
