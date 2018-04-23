@@ -1,5 +1,10 @@
 mysql = require('mysql');
 connection = require('./csql')
+randomize = require('randomatic');
+
+pattern = '0Aa0';
+length = 6;
+options = {};
 
 let userModel = {};
 
@@ -22,7 +27,7 @@ userModel.getCode= (userData,callback) =>{
 		        });
 		}
     }
-userModel.InsertCode= (userData,callback) =>{
+userModel.InsertCode = (userData,callback) =>{
     if (connection) {
         console.log("insert"+`${userData.id_usuario} ${userData.codeGene}`)
 		var find = false;
@@ -36,12 +41,10 @@ userModel.InsertCode= (userData,callback) =>{
 					}
 				}
 				if(find){
-					callback(null,{"find": find});
-				}else{
-					//aqui debemos insertar el nuevo código para la orden X y usuario Y
-					callback(null,rows);
+					codes = nuevoCodigo(find,rows);
 				}
-				
+				console.log("nuevo codigo a insertar: "+codes)
+				callback(null,rows);
 			}else{
 				callback(null, {
                   "exists": false,
@@ -49,10 +52,24 @@ userModel.InsertCode= (userData,callback) =>{
 		        });
 			}
 		});
-		}else{
-			callback(null, {
-		          "msg": "bad things"
-		        });
-		}
-    }
+	}else{
+		callback(null, {
+				"msg": "bad things"
+			});
+	}
+}
+function nuevoCodigo(find,rows){
+	codes = ""
+	while(find){
+		codes = randomize(pattern,length);
+		find = false;
+		for(i = 0; i<rows.length; i++){
+			if(codes.localeCompare(rows[i].codigoQR)==0){
+				console.log("existe: "+userData.codeGene)
+				find = true;
+			}
+		}		
+	}
+	return codes;
+}
 module.exports = userModel;

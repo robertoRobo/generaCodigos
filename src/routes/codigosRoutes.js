@@ -29,7 +29,6 @@ module.exports = function(app){
           };
         User.InsertCode(userData,(err,data) =>{
             //console.log(data.length)
-            
             res.json(data);
          
 		});
