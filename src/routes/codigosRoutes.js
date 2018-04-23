@@ -13,7 +13,6 @@ module.exports = function(app){
         
         //console.log("code: "+codes[0]);
         var userData = {
-            codeGene: "1rwPq",
             id_usuario: req.body.id_usu
           };
         User.getCode(userData,(err,data) =>{

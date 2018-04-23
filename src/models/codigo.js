@@ -10,9 +10,9 @@ let userModel = {};
 
 userModel.getCode= (userData,callback) =>{
 	if (connection) {
-		connection.query(`Select codigoQR,id_usuario from code1 where id_usuario = `+`${userData.id_usuario}`,
+		connection.query(`Select * from orden where id_usuario = ${userData.id_usuario}`,
 		(err,rows)=>{
-			if (rows) {
+			if (rows.length>0) {
 				callback(null,rows);
 			}else{
 				callback(null, {
@@ -44,7 +44,7 @@ userModel.InsertCode = (userData,callback) =>{
 					codes = nuevoCodigo(find,rows);
 					userData.codeGene = codes;
 				}
-				console.log("nuevo codigo a insertar: "+userData.codeGene+ " orden: "+)
+				console.log("nuevo codigo a insertar: "+userData.codeGene+ " orden: ")
 				nuevoElemento(userData,callback);
 				///callback(null,rows);
 			}else{
