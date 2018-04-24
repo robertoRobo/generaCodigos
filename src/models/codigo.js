@@ -69,7 +69,7 @@ function nuevoElemento(userData,callback,connection){
 	//connection.query(`Select codigo from orden`,	
 	(err,rows)=>{
 			if (rows) {
-				callback(null,rows);
+				callback(null,{"exito":true});
 			}else{
 				callback(null, {
                   "exists": false,
