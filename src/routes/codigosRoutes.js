@@ -34,8 +34,17 @@ module.exports = function(app){
         User.InsertCode(userData,(err,data) =>{
             //console.log(data.length)
             res.json(data);
-         
-		});
+          });
     });
+    app.delete('/codigo',(req,res) =>{
+      //console.log("code: "+codes[0]);
+      var userData = {
+          code: req.body.code,
+      };
+      User.DeleteOrden(userData,(err,data) =>{
+          //console.log(data.length)
+          res.json(data);
+        });
+  });
     
 }

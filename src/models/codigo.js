@@ -60,6 +60,25 @@ userModel.InsertCode = (userData,callback) =>{
 			});
 	}
 }
+userModel.DeleteOrden = (userData,callback) =>{
+	if (connection) {
+		connection.query(`Select * from orden where codigo = '${userData.code}'`,
+		(err,rows)=>{
+			if (rows.length>0) {
+				callback(null,rows);
+			}else{
+				callback(null, {
+                  "exists": false,
+                  codigo: userData.codeGene
+		        });
+			}
+		});
+	}else{
+		callback(null, {
+				"msg": "bad things"
+			});
+	}
+}
 
 function nuevoElemento(userData,callback,connection){
 	//callback(null,{"prueba":true});
