@@ -29,7 +29,7 @@ module.exports = function(app){
             id_usuario: req.body.id_usu,
             id_sucursal: req.body.sucursal,
             descripcion: req.body.desc,
-            total: req.body.tot,
+            total: req.body.tot
 
             //numOrden: req.body.orden
           };
@@ -43,9 +43,9 @@ module.exports = function(app){
       var userData = {
           codigo: req.body.code
       };
-      console.log(userData.codigo);
+      //console.log(userData.codigo);
       User.DeleteOrden(userData,(err,data) =>{
-          //console.log(data)
+          console.log(data)
           res.json(data);
         });
   });

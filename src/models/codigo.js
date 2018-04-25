@@ -6,7 +6,7 @@ pattern = '0Aa0';
 length = 6;
 options = {};
 
-json = '{"result":[{"id_usuario":"100"}]}';
+json = '{"result":[]}';
 
 let userModel = {};
 
@@ -15,8 +15,12 @@ userModel.getCode= (userData,callback) =>{
 		connection.query(`Select * from orden where id_usuario = ${userData.id_usuario}`,
 		(err,rows)=>{
 			if (rows.length>0) {
-				rows = JSON.stringify(rows);
-				callback(null,rows);
+				rows = rows[0]
+				obj = JSON.parse(json);
+				obj['result'].push(rows);
+
+				console.log(obj["result"]);
+				callback(null,obj);
 			}else{
 				callback(null, {
                   "exists": false,
@@ -77,11 +81,22 @@ userModel.DeleteOrden = (userData,callback) =>{
 				console.log("usuario: "+rows[0].fecha);
 				console.log("usuario: "+rows[0].realizada);
 				
-*/				rows = rows[0];
-				
-				rows = JSON.stringify(rows);
-				
-				callback(null,rows);
+*/				//rows[0] += `"exists":true`;
+				//rows = rows[0];
+				var datos = {
+					num_orden: rows[0].num_orden,
+					id_usuario: rows[0].id_usuario,
+					id_sucursal: rows[0].id_sucursal,
+					descripcion: rows[0].descripcion,
+					total: rows[0].total,
+					codigo: userData.codigo,
+					fecha: rows[0].fecha,
+					realizada: rows[0].realizada,
+					exists: true
+				} 
+				//rows += `"exists":true`;
+				//rows = JSON.stringify(rows[0]);
+				callback(null,datos);
 			}else{
 				callback(null, {
                   "exists": false,
