@@ -120,7 +120,7 @@ function nuevoElemento(userData,callback,connection){
 }
 
 function darBaja(userData,callback,connection){
-	connection.query(`update orden set realizada = 1`,
+	connection.query(`update orden set realizada = 1 where codigo = '${userData.codigo}'`,
 	//connection.query(`Select codigo from orden`,	
 	(err,rows)=>{
 			if (rows) {
