@@ -9,13 +9,15 @@ options = {};
 
 
 module.exports = function(app){
-	app.post('/codigo',(req,res) =>{
+	app.post('/codigo',(req,res) =>{//regresa las ordenes de un usuario X
         
         //console.log("code: "+codes[0]);
         var userData = {
             id_usuario: req.body.id_usu
           };
+        
         User.getCode(userData,(err,data) =>{
+          //console.log(data)
 			res.json(data);
 		});
     });
@@ -36,13 +38,14 @@ module.exports = function(app){
             res.json(data);
           });
     });
-    app.delete('/codigo',(req,res) =>{
+    app.put('/baja',(req,res) =>{
       //console.log("code: "+codes[0]);
       var userData = {
-          code: req.body.code,
+          codigo: req.body.code
       };
+      console.log(userData.codigo);
       User.DeleteOrden(userData,(err,data) =>{
-          //console.log(data.length)
+          //console.log(data)
           res.json(data);
         });
   });

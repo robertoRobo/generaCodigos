@@ -6,6 +6,8 @@ pattern = '0Aa0';
 length = 6;
 options = {};
 
+json = '{"result":[{"id_usuario":"100"}]}';
+
 let userModel = {};
 
 userModel.getCode= (userData,callback) =>{
@@ -13,6 +15,7 @@ userModel.getCode= (userData,callback) =>{
 		connection.query(`Select * from orden where id_usuario = ${userData.id_usuario}`,
 		(err,rows)=>{
 			if (rows.length>0) {
+				rows = JSON.stringify(rows);
 				callback(null,rows);
 			}else{
 				callback(null, {
@@ -62,14 +65,27 @@ userModel.InsertCode = (userData,callback) =>{
 }
 userModel.DeleteOrden = (userData,callback) =>{
 	if (connection) {
-		connection.query(`Select * from orden where codigo = '${userData.code}'`,
+		connection.query(`Select * from orden where codigo = '${userData.codigo}'`,
 		(err,rows)=>{
 			if (rows.length>0) {
+/*				console.log("usuario: "+rows[0].num_orden);
+				console.log("usuario: "+rows[0].id_usuario);
+				console.log("usuario: "+rows[0].id_sucursal);
+				console.log("usuario: "+rows[0].descripcion);
+				console.log("usuario: "+rows[0].total);
+				console.log("usuario: "+rows[0].codigo);
+				console.log("usuario: "+rows[0].fecha);
+				console.log("usuario: "+rows[0].realizada);
+				
+*/				rows = rows[0];
+				
+				rows = JSON.stringify(rows);
+				
 				callback(null,rows);
 			}else{
 				callback(null, {
                   "exists": false,
-                  codigo: userData.codeGene
+                  codigo: userData.codigo
 		        });
 			}
 		});
