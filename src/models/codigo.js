@@ -69,20 +69,9 @@ userModel.InsertCode = (userData,callback) =>{
 }
 userModel.DeleteOrden = (userData,callback) =>{
 	if (connection) {
-		connection.query(`Select * from orden where codigo = '${userData.codigo}'`,
+		connection.query(`Select * from orden where codigo = '${userData.codigo}' and realizada <> 1`,
 		(err,rows)=>{
 			if (rows.length>0) {
-/*				console.log("usuario: "+rows[0].num_orden);
-				console.log("usuario: "+rows[0].id_usuario);
-				console.log("usuario: "+rows[0].id_sucursal);
-				console.log("usuario: "+rows[0].descripcion);
-				console.log("usuario: "+rows[0].total);
-				console.log("usuario: "+rows[0].codigo);
-				console.log("usuario: "+rows[0].fecha);
-				console.log("usuario: "+rows[0].realizada);
-				
-*/				//rows[0] += `"exists":true`;
-				//rows = rows[0];
 				var datos = {
 					num_orden: rows[0].num_orden,
 					id_usuario: rows[0].id_usuario,
@@ -96,7 +85,9 @@ userModel.DeleteOrden = (userData,callback) =>{
 				} 
 				//rows += `"exists":true`;
 				//rows = JSON.stringify(rows[0]);
-				callback(null,datos);
+				console.log(datos);
+				darBaja(datos,callback,connection);
+				//callback(null,datos);
 			}else{
 				callback(null, {
                   "exists": false,
@@ -112,8 +103,6 @@ userModel.DeleteOrden = (userData,callback) =>{
 }
 
 function nuevoElemento(userData,callback,connection){
-	//callback(null,{"prueba":true});
-	
 	connection.query(`insert into orden(id_usuario,id_sucursal,descripcion,total,codigo,fecha,realizada) values(${userData.id_usuario},${userData.id_sucursal}
 		,'${userData.descripcion}',${userData.total},'${userData.codeGene}',NOW(),0)`,
 	//connection.query(`Select codigo from orden`,	
@@ -129,7 +118,21 @@ function nuevoElemento(userData,callback,connection){
 		});
 	//callback(null,userData);
 }
-	
+
+function darBaja(userData,callback,connection){
+	connection.query(`update orden set realizada = 1`,
+	//connection.query(`Select codigo from orden`,	
+	(err,rows)=>{
+			if (rows) {
+				callback(null,{"exists":true});
+			}else{
+				callback(null, {
+                  "exists": false,
+                  codigo: userData.codeGene
+		        });
+			}
+		});
+}
 
 
 function nuevoCodigo(find,rows){

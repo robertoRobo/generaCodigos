@@ -45,7 +45,7 @@ module.exports = function(app){
       };
       //console.log(userData.codigo);
       User.DeleteOrden(userData,(err,data) =>{
-          console.log(data)
+          //console.log(data)
           res.json(data);
         });
   });
