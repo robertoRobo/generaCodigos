@@ -85,7 +85,7 @@ userModel.DeleteOrden = (userData,callback) =>{
 				} 
 				//rows += `"exists":true`;
 				//rows = JSON.stringify(rows[0]);
-				console.log(datos);
+				//console.log(datos);
 				darBaja(datos,callback,connection);
 				//callback(null,datos);
 			}else{
@@ -124,7 +124,7 @@ function darBaja(userData,callback,connection){
 	//connection.query(`Select codigo from orden`,	
 	(err,rows)=>{
 			if (rows) {
-				callback(null,{"exists":true});
+				callback(null,userData);
 			}else{
 				callback(null, {
                   "exists": false,
@@ -142,7 +142,7 @@ function nuevoCodigo(find,rows){
 		find = false;
 		for(i = 0; i<rows.length; i++){
 			if(codes.localeCompare(rows[i].codigoQR)==0){
-				console.log("existe: "+userData.codeGene)
+				//console.log("existe: "+userData.codeGene)
 				find = true;
 			}
 		}		
