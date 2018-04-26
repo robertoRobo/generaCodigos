@@ -133,7 +133,7 @@ function darBaja(userData,callback,connection){
 	//connection.query(`Select codigo from orden`,	
 	(err,rows)=>{
 			if (rows) {
-				callback(null,userData);
+				callback(null,{"exists":true});
 			}else{
 				callback(null, {
                   "exists": false,
