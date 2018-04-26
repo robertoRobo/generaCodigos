@@ -38,16 +38,20 @@ module.exports = function(app){
             res.json(data);
           });
     });
-    app.put('/baja',(req,res) =>{
-      //console.log("code: "+codes[0]);
+    app.put('/orden',(req,res) =>{
       var userData = {
           codigo: req.body.code
       };
-      //console.log(userData.codigo);
-      User.DeleteOrden(userData,(err,data) =>{
-          //console.log(data)
+      User.getOrden(userData,(err,data) =>{
           res.json(data);
         });
-  });
-    
+    });
+    app.put('/baja',(req,res) =>{
+      var userData = {
+          codigo: req.body.code
+      };
+      User.DeleteOrden(userData,(err,data) =>{
+          res.json(data);
+        });
+    });
 }

@@ -67,7 +67,7 @@ userModel.InsertCode = (userData,callback) =>{
 			});
 	}
 }
-userModel.DeleteOrden = (userData,callback) =>{
+userModel.getOrden = (userData,callback) =>{
 	if (connection) {
 		connection.query(`Select * from orden where codigo = '${userData.codigo}' and realizada <> 1`,
 		(err,rows)=>{
@@ -86,8 +86,8 @@ userModel.DeleteOrden = (userData,callback) =>{
 				//rows += `"exists":true`;
 				//rows = JSON.stringify(rows[0]);
 				//console.log(datos);
-				darBaja(datos,callback,connection);
-				//callback(null,datos);
+				//darBaja(datos,callback,connection);
+				callback(null,datos);
 			}else{
 				callback(null, {
                   "exists": false,
@@ -95,6 +95,15 @@ userModel.DeleteOrden = (userData,callback) =>{
 		        });
 			}
 		});
+	}else{
+		callback(null, {
+				"msg": "bad things"
+			});
+	}
+}
+userModel.DeleteOrden = (userData,callback) =>{
+	if (connection) {
+		darBaja(userData,callback,connection);
 	}else{
 		callback(null, {
 				"msg": "bad things"
